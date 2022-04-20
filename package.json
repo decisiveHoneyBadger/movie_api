@@ -1,17 +1,27 @@
+
+
 {
-  "name": "nodeprojects",
+  "name": "express",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.3",
+    "uuid": "8.3.2",
     "morgan": "^1.10.0",
     "serve": "^13.0.2"
+
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }

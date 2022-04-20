@@ -6,7 +6,184 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myFlix</title>
 </head>
-<body>
-    This is documentations.
+<body class="container">
+    <h1 class="text-white">Documentation</h1>
+    <div>
+      <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Returns</th>
+          <th scope="col">URL</th>
+          <th scope="col">HTTP Method</th>
+          <th scope="col">Query parameters</th>
+          <th scope="col">Request </th>
+          <th scope="col">Response </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>List of movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about all favorite movies to a user</td>
+        </tr>
+        <tr>
+          <td>Return data about a single movie by title to the user</td>
+          <td>/movies/[title]</td>
+          <td>GET</td>
+          <td>:Title</td>
+          <td>None</td>
+          <td>JSON object holding data about the selected movie Ex: 
+            <pre>
+              <code>
+                {
+                  Title: { type: String, required: true },
+                  Description: { type: String, required: true },
+                  Genre: {
+                    Name: String,
+                    Bio: String,
+                  },
+                  Director: {
+                    Name: String,
+                    Bio: String,
+                  },
+                  Actors: [String],
+                  ImagePath: [String],
+                  Featured: Boolean,
+                }
+    
+              </code>
+            </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Data about a genre by name</td>
+          <td>/movies/genres/[name]</td>
+          <td>GET</td>
+          <td>:Name</td>
+          <td>None</td>
+          <td>JSON object holding data about genre. Ex:
+            <pre>
+              <code>
+                {
+                  GenreID: Number,
+                  Name: String,
+                  Description: String,
+                }
+              </code>
+            </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Data about a director  by name</td>
+          <td>/movies/directors/[name]</td>
+          <td>GET</td>
+          <td>:Name</td>
+          <td>None</td>
+          <td>JSON object holding data about director. Ex: 
+            <pre>
+              <code>
+                {
+                  Name: String,
+                  Bio: String,
+                  Born: Date,
+                  Death: Date,
+                }
+              </code>
+            </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>JSON object holding data about the user being added. Ex: 
+            <pre>
+              <code>
+    { 
+      "username": "Kim", 
+      "favorites": [
+        ...
+      ] 
+    }
+              </code>
+            </pre>
+          </td>
+          <td>JSON object holding data about added user including ID. Ex:
+            <pre>
+              <code>
+    { 
+      id: '1',
+      "username": "Kim", 
+      "id": "898dddd0-bbe4-4b15-b33a-485e1c97565c" 
+      "favorites": [
+        ...
+      ] 
+    }
+              </code>
+            </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user name</td>
+          <td>/users/[username]</td>
+          <td>PUT</td>
+          <td>:Username</td>
+          <td> A JSON object holding the new user name. Ex:
+            <pre>
+              <code>
+    { 
+      "name": "Kim"
+    }
+              </code>
+            </pre>
+          </td>
+          <td>JSON object with the updated user. Ex:
+            <pre>
+              <code>
+    { 
+      id: '1',
+      name: 'Kim'
+    }
+              </code>
+            </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>/users/[username]/movies/[movieid]</td>
+          <td>POST</td>
+          <td>:Username, :MovieID</td>
+          <td>None</td>
+          <td>Movie ID added to user's list of favorites</td>
+        </tr>
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites</td>
+          <td>/users/[username]/movies/[movieid]</td>   
+          <td>DELETE</td>
+          <td>:Username, :MovieID</td>
+          <td>None</td>
+          <td>Movie ID gets removed from user's list of favorites</td>
+        </tr>
+        <tr>
+          <td>Deletes a user</td>
+          <td>/users/[username]</td>
+          <td>DELETE</td>
+          <td>:Username</td>
+          <td>None</td>
+          <td>Message stating user has been deleted</td>
+        </tr>
+      </tbody>
+    </table></div>
+    
+
 </body>
 </html>
+
+
+
+
+
