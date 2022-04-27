@@ -1,2 +1,4 @@
 node_modules/*
 nodeProjects/*
+data.js/*
+server.js/*

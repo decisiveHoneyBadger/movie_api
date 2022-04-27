@@ -1,0 +1,545 @@
+
+let users = [
+    {
+        id: 1,
+        name: 'Kim',
+        favoriteMovies: []
+    },
+    {
+        id: 2,
+        name: 'Joe',
+        favoriteMovies: [ 'Taxi Driver' ]
+    },
+]
+
+let movies = [
+    {
+        "Title": "The Silence of the Lambs",
+        "Description": "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.",
+        "Genre": {
+            "Name": "Thriller",
+            "Description": "These are types of films known to promote intense excitement, suspense, a high level of anticipation, ultra-heightened expectation, uncertainty, anxiety, and nerve-wracking tension."
+        },
+        "Director": {
+            "Name": "Jonathan Demme",
+            "Bio": "Jonathan Demme was an American filmmaker.",
+            "Birthyear": "1944",
+            "Deathyear": "2017"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0102926/mediaviewer/rm3242988544/",
+        "Featured": ""
+    },
+    {
+        "Title": "Taxi Driver",
+        "Description": "A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Martin Scorsese",
+            "Bio": "Martin Scorsese is known for his gritty, meticulous filmmaking style and is widely considered one of the most important directors of all time. Scorsese's passion for films started at a young age, as he was an 8-year-old, pint-sized filmmaker. In 1968, he completed his first feature-length film, Who's That Knocking at My Door?, but it wasn't until he released Taxi Driver nearly 10 years later that he skyrocketed to fame for his raw formula of storytelling. He proved that the film wasn't a fluke with a lengthy string of successes that included Raging Bull, Goodfellas, The Departed, Hugo and The Irishman.",
+            "Birthyear": "1942",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0075314/mediaviewer/rm3951714048/",
+        "Featured": ""
+    },
+    {
+        "Title": "Donnie Darko",
+        "Description": "After narrowly escaping a bizarre accident, a troubled teenager is plagued by visions of a man in a large rabbit suit who manipulates him to commit a series of crimes.",
+        "Genre": {
+            "Name": "Thriller",
+            "Description": "These are types of films known to promote intense excitement, suspense, a high level of anticipation, ultra-heightened expectation, uncertainty, anxiety, and nerve-wracking tension."
+        },
+        "Director": {
+            "Name": "Richard Kelly",
+            "Bio": "Richard Kelly is an American filmmaker and screenwriter, who initially gained recognition for writing and directing the cult classic Donnie Darko in 2001.",
+            "Birthyear": "1975",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0246578/mediaviewer/rm1527459840/",
+        "Featured": ""
+    },
+    {
+        "Title": "Dr. Strangelove or: How I learned to Stop Worrying and Love the Bomb",
+        "Description": "An insane American general orders a bombing attack on the Soviet Union, triggering a path to nuclear holocaust that a war room full of politicians and generals frantically tries to stop.",
+        "Genre": {
+            "Name": "Comedy",
+            "Description": "Cinematic comedy can be considered the oldest film genre (and one of the most prolific and popular). Comedy was ideal for the early silent films, as it was dependent on visual action and physical humor rather than sound."
+        },
+        "Director": {
+            "Name": "Stanley Kubrick",
+            "Bio": "Stanley Kubrick was an American film director, producer, screenwriter, and photographer. He is frequently cited as one of the greatest filmmakers in cinematic history. His films, almost all of which are adaptations of novels or short stories, cover a wide range of genres and are noted for their realism, dark humor, unique cinematography, extensive set designs, and evocative use of music.",
+            "Birthyear": "1928",
+            "Deathyear": "1999"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0057012/mediaviewer/rm3960095232/",
+        "Featured": ""
+    },
+    {
+        "Title": "Fight Club",
+        "Description": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "David Fincher",
+            "Bio": "David Fincher is an American film director and music video director. Known for his dark and stylish thrillers, such as Seven (1995), The Game (1997), Fight Club (1999), Panic Room (2002), and Zodiac (2007), Fincher received Academy Award nominations for Best Director for his 2008 film The Curious Case of Benjamin Button and his 2010 film The Social Network, which also won him the Golden Globe award for Best Director.",
+            "Birthyear": "1962",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://picfiles.alphacoders.com/915/91577.png",
+        "Featured": ""
+    },
+    {
+        "Title": "Pulp Fiction",
+        "Description": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Quentin Tarantino",
+            "Bio": "Quentin Tarantino is a popular Hollywood Director/Producer, who is famous for his roles in movies like Once Upon a Time in Hollywood, Django Unchained etc.",
+            "Birthyear": "1963",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg",
+        "Featured": ""
+    },
+    {
+        "Title": "Crouching Tiger, Hidden Dragon",
+        "Description": "A young Chinese warrior steals a sword from a famed swordsman and then escapes into a world of romantic adventure with a mysterious man in the frontier of the nation.",
+        "Genre": {
+            "Name": "Martial Arts",
+            "Description": "Martial arts films are a subgenre of action films that feature numerous martial arts combat between characters. These combats are usually the films' primary appeal and entertainment value, and often are a method of storytelling and character expression and development."
+        },
+        "Director": {
+            "Name": "Ang Lee",
+            "Bio": "Ang Lee is a Taiwanese film director, screenwriter and producer. Lee has directed a diverse set of films such as Sense and Sensibility (1995), Crouching Tiger, Hidden Dragon (2000), which won the Academy Award for Best Foreign Language Film, Hulk (2003).",
+            "Birthyear": "1954",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0190332/mediaviewer/rm2202866688/",
+        "Featured": ""
+    },
+    {
+        "Title": "Scarface",
+        "Description": "In 1980 Miami, a determined Cuban immigrant takes over a drug cartel and succumbs to greed.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Brian De Palma",
+            "Bio": "Brian De Palma is an American film director and screenwriter. With a career spanning over 50 years, he is best known for his work in the suspense, crime and psychological thriller genres.",
+            "Birthyear": "1940",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0086250/mediaviewer/rm512766208/",
+        "Featured": ""
+    },
+    {
+        "Title": "Carlito's Way",
+        "Description": "A Puerto Rican former convict, just released from prison, pledges to stay away from drugs and violence despite the pressure around him and lead on to a better life outside of N.Y.C.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Brian De Palma",
+            "Bio": "Brian De Palma is an American film director and screenwriter. With a career spanning over 50 years, he is best known for his work in the suspense, crime and psychological thriller genres.",
+            "Birthyear": "1940",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0106519/mediaviewer/rm255714561/",
+        "Featured": ""
+    },
+    {
+        "Title": "Terminator 2: Judgment Day",
+        "Description": "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten-year-old son John from a more advanced and powerful cyborg.",
+        "Genre": {
+            "Name": "Action",
+            "Description": "This major genre type includes films that have tremendous impact, continuous high energy, lots of physical stunts and activity, possibly extended chase scenes, races, rescues, battles, martial arts, mountains and mountaineering, destructive disasters (floods, explosions, natural disasters, fires, etc.), fights, escapes, non-stop motion, spectacular rhythm and pacing, and adventurous heroes - all designed for pure audience escapism with the action sequences at the core of the film."
+        },
+        "Director": {
+            "Name": "James Cameron",
+            "Bio": "James Francis Cameron is an Academy Award-winning Canadian-American director, producer and screenwriter. He has written and directed films as disparate as Aliens and Titanic.",
+            "Birthyear": "1954",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0103064/mediaviewer/rm1982141440/",
+        "Featured": ""
+    }
+]    
+    {
+        "Title": "Requiem for a Dream",
+        "Description": "The drug-induced utopias of four Coney Island people are shattered when their addictions run deep.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Darren Aronofsky",
+            "Bio": "Darren S. Aronofsky is an American  film director, screenwriter  and film producer.",
+            "Birthyear": "1969",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0180093/mediaviewer/rm3305703424/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Matrix",
+        "Description": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science Fiction Films are usually scientific, visionary, comic-strip-like, and imaginative, and usually visualized through fanciful, imaginative settings, expert film production design, advanced technology gadgets (i.e., robots and spaceships), scientific developments, or by fantastic special effects. Sci-fi films are complete with heroes, distant planets, impossible quests, improbable settings, fantastic places, great dark and shadowy villains, futuristic technology and gizmos, and unknown and inexplicable forces."
+        },
+        "Director": {
+            "Name": "The Wachowskis",
+            "Bio": "Lana Wachowski and Lilly Wachowski (formerly known as Andy Wachowski) are American film and television directors, writers and producers. The sisters are both trans women.",
+            "Birthyear": "1965",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0133093/mediaviewer/rm525547776/",
+        "Featured": ""
+    },
+    {
+        "Title": "Once Upon a Time in America",
+        "Description": "A former Prohibition-era Jewish gangster returns to the Lower East Side of Manhattan 35 years later, where he must once again confront the ghosts and regrets of his old life.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Sergio Leone",
+            "Bio": "Sergio Leone was an Italian film director, producer and screenwriter credited as the creator of the Spaghetti Western genre and widely regarded as one of the most influential directors in the history of cinema.",
+            "Birthyear": "1929",
+            "Deathyear": "1989"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0087843/mediaviewer/rm480514304/",
+        "Featured": ""
+    },
+    {
+        "Title": "Psycho",
+        "Description": "A Phoenix secretary embezzles $40,000 from her employer's client, goes on the run, and checks into a remote motel run by a young man under the domination of his mother.",
+        "Genre": {
+            "Name": "Horror",
+            "Description": "Horror Films are unsettling films designed to frighten and panic, cause dread and alarm, and to invoke our hidden worst fears, often in a terrifying, shocking finale, while captivating and entertaining us at the same time in a cathartic experience. Horror films effectively center on the dark side of life, the forbidden, and strange and alarming events."
+        },
+        "Director": {
+            "Name": "Alfred Hitchcock",
+            "Bio": "Alfred Hitchcock was an English filmmaker widely regarded as one of the most influential figures in the history of cinema.[1] In a career spanning six decades, he directed over 50 feature films,[a] many of which are still widely watched and studied today.",
+            "Birthyear": "1899",
+            "Deathyear": "1980 "
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0054215/mediaviewer/rm1902135552/",
+        "Featured": ""
+    },
+    {
+        "Title": "Titanic",
+        "Description": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+        "Genre": {
+            "Name": "Romance",
+            "Description": "Romance films are love stories, or affairs of the heart that center on passion, emotion, and the romantic, affectionate involvement of the main characters (usually a leading man and lady), and the journey that their love takes through courtship or marriage. Romance films make the love story or the search for love the main plot focus."
+        },
+        "Director": {
+            "Name": "James Cameron",
+            "Bio": "James Francis Cameron is an Academy Award-winning Canadian-American director, producer and screenwriter. He has written and directed films as disparate as Aliens and Titanic.",
+            "Birthyear": "1954",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0120338/mediaviewer/rm2647458304/",
+        "Featured": ""
+    },
+    {
+        "Title": "Lord of the Rings: The Fellowship of the Ring",
+        "Description": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+        "Genre": {
+            "Name": "Adventure",
+            "Description": "Adventure Films are exciting stories, with new experiences or exotic locales. Adventure films are very similar to the action film genre, in that they are designed to provide an action-filled, energetic experience for the film viewer."
+        },
+        "Director": {
+            "Name": "Peter Jackson",
+            "Bio": "Peter Jackson is a New Zealand film director, screenwriter, and film producer. He is best known as the director, writer, and producer of the Lord of the Rings trilogy (2001–2003) and the Hobbit trilogy (2012–2014), both of which are adapted from the novels of the same name by J. R. R. Tolkien.",
+            "Birthyear": "1961",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3592958976/",
+        "Featured": ""
+    },
+    {
+        "Title": "12 Monkeys",
+        "Description": "In a future world devastated by disease, a convict is sent back in time to gather information about the man-made virus that wiped out most of the human population on the planet.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science Fiction Films are usually scientific, visionary, comic-strip-like, and imaginative, and usually visualized through fanciful, imaginative settings, expert film production design, advanced technology gadgets (i.e., robots and spaceships), scientific developments, or by fantastic special effects. Sci-fi films are complete with heroes, distant planets, impossible quests, improbable settings, fantastic places, great dark and shadowy villains, futuristic technology and gizmos, and unknown and inexplicable forces."
+        },
+        "Director": {
+            "Name": "Terry Gilliam",
+            "Bio": "Terry Gilliam is an American-born British film director, screenwriter, animator, actor, comedian and former member of the Monty Python comedy troupe.",
+            "Birthyear": "1940",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0114746/mediaviewer/rm267521536/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Godfather",
+        "Description": "The aging patriarch of an organized crime dynasty in postwar New York City transfers control of his clandestine empire to his reluctant youngest son.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Francis Ford Coppola",
+            "Bio": "Francis Ford Coppola is an American film director, producer, and screenwriter. He was a central figure in the New Hollywood filmmaking movement of the 1960s and 1970s.[5] His accolades include five Academy Awards, six Golden Globe Awards, two Palmes d'Or, and a British Academy Film Award.",
+            "Birthyear": "1939",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0068646/mediaviewer/rm746868224/",
+        "Featured": ""
+    },
+    {
+        "Title": "Harry Potter and the Sorcerer's Stone",
+        "Description": "An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.",
+        "Genre": {
+            "Name": "Fantasy",
+            "Description": "Unlike science fiction films that base their content upon some degree of scientific truth, take the audience to netherworld, fairy-tale places where events are unlikely to occur in real life. In mythological or legendary times, they transcend the bounds of human possibility and physical laws."
+        },
+        "Director": {
+            "Name": "Chris Columbus",
+            "Bio": "Chris Columbus is an American filmmaker. Born in Spangler, Pennsylvania, Columbus studied film at Tisch School of the Arts where he developed an interest in filmmaking. After writing screenplays for several teen comedies in the mid-1980s, he made his directorial debut with a teen adventure, Adventures in Babysitting (1987).",
+            "Birthyear": "1958",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0241527/mediaviewer/rm683213568/",
+        "Featured": ""
+    },
+    {
+        "Title": "Full Metal Jacket",
+        "Description": "A pragmatic U.S. Marine observes the dehumanizing effects the Vietnam War has on his fellow recruits from their brutal boot camp training to the bloody street fighting in Hue.",
+        "Genre": {
+            "Name": "War",
+            "Description": "War and Anti-War Films often acknowledge the horror and heartbreak of war, letting the actual combat fighting or conflict (against nations or humankind) provide the primary plot or background for the action of the film."
+        },
+        "Director": {
+            "Name": "Stanley Kubrick",
+            "Bio": "Stanley Kubrick was an American film director, producer, screenwriter, and photographer. He is frequently cited as one of the greatest filmmakers in cinematic history. His films, almost all of which are adaptations of novels or short stories, cover a wide range of genres and are noted for their realism, dark humor, unique cinematography, extensive set designs, and evocative use of music.",
+            "Birthyear": "1928",
+            "Deathyear": "1999"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0093058/mediaviewer/rm606436352/",
+        "Featured": ""
+    },
+    {
+        "Title": "Heat",
+        "Description": "A group of high-end professional thieves start to feel the heat from the LAPD when they unknowingly leave a clue at their latest heist.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Michael Mann",
+            "Bio": "Michael Mann is an American director, screenwriter, and producer of film and television who is best known for his distinctive style of crime drama.",
+            "Birthyear": "1943",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0093058/mediaviewer/rm606436352/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Usual Suspects",
+        "Description": "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which began when five criminals met at a seemingly random police lineup.",
+        "Genre": {
+            "Name": "Thriller",
+            "Description": "These are types of films known to promote intense excitement, suspense, a high level of anticipation, ultra-heightened expectation, uncertainty, anxiety, and nerve-wracking tension."
+        },
+        "Director": {
+            "Name": "Bryan Singer",
+            "Bio": "Bryan Singer is an American film director, producer and screenwriter. He is the founder of Bad Hat Harry Productions and has produced or co-produced almost all of the films he has directed.",
+            "Birthyear": "1965",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0114814/mediaviewer/rm1975465472/",
+        "Featured": ""
+    },
+    {
+        "Title": "American History X",
+        "Description": "A former neo-nazi skinhead tries to prevent his younger brother from going down the same wrong path that he did.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Tony Kaye",
+            "Bio": "Tony Kaye is an English director of films, music videos, advertisements, and documentaries.",
+            "Birthyear": "1952",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0120586/mediaviewer/rm15519489/",
+        "Featured": ""
+    },
+    {
+        "Title": "Leon: The Professional",
+        "Description": "12-year-old Mathilda is reluctantly taken in by Léon, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protégée and learns the assassin's trade.",
+        "Genre": {
+            "Name": "Thriller",
+            "Description": "These are types of films known to promote intense excitement, suspense, a high level of anticipation, ultra-heightened expectation, uncertainty, anxiety, and nerve-wracking tension."
+        },
+        "Director": {
+            "Name": "Luc Besson",
+            "Bio": "Luc Besson is a French film director, screenwriter and producer.",
+            "Birthyear": "1959",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0110413/mediaviewer/rm72749056/",
+        "Featured": ""
+    },
+    {
+        "Title": "Schindler's List",
+        "Description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Steven Spielberg",
+            "Bio": "Steven Spielberg is an American film director, producer, and screenwriter. He began his career in the New Hollywood era and is currently the most commercially successful director of all time.",
+            "Birthyear": "1946",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0108052/mediaviewer/rm1610023168/",
+        "Featured": ""
+    },
+    {
+        "Title": "Falling Down",
+        "Description": "An ordinary man frustrated with the various flaws he sees in society begins to psychotically and violently lash out against them.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Joel Schumacher",
+            "Bio": "Joel Schumacher was an American film director, producer, screenwriter and fashion designer.",
+            "Birthyear": "1939",
+            "Deathyear": "2020"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0106856/mediaviewer/rm3147906048/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Wolf of Wall Street",
+        "Description": "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+        "Genre": {
+            "Name": "Comedy",
+            "Description": "Cinematic comedy can be considered the oldest film genre (and one of the most prolific and popular). Comedy was ideal for the early silent films, as it was dependent on visual action and physical humor rather than sound."
+        },
+        "Director": {
+            "Name": "Martin Scorsese",
+            "Bio": "Martin Scorsese is known for his gritty, meticulous filmmaking style and is widely considered one of the most important directors of all time. Scorsese's passion for films started at a young age, as he was an 8-year-old, pint-sized filmmaker. In 1968, he completed his first feature-length film, Who's That Knocking at My Door?, but it wasn't until he released Taxi Driver nearly 10 years later that he skyrocketed to fame for his raw formula of storytelling. He proved that the film wasn't a fluke with a lengthy string of successes that included Raging Bull, Goodfellas, The Departed, Hugo and The Irishman.",
+            "Birthyear": "1942",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0993846/mediaviewer/rm2842940160/",
+        "Featured": ""
+    },
+    {
+        "Title": "Back to the Future",
+        "Description": "Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean invented by his close friend, the eccentric scientist Doc Brown.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science Fiction Films are usually scientific, visionary, comic-strip-like, and imaginative, and usually visualized through fanciful, imaginative settings, expert film production design, advanced technology gadgets (i.e., robots and spaceships), scientific developments, or by fantastic special effects. Sci-fi films are complete with heroes, distant planets, impossible quests, improbable settings, fantastic places, great dark and shadowy villains, futuristic technology and gizmos, and unknown and inexplicable forces."
+        },
+        "Director": {
+            "Name": "Robert Zemeckis",
+            "Bio": "Robert Zemeckis is an American film director, producer, and screenwriter.",
+            "Birthyear": "1952",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0088763/mediaviewer/rm554638848/",
+        "Featured": ""
+    },
+    {
+        "Title": "American Beauty",
+        "Description": "A sexually frustrated suburban father has a mid-life crisis after becoming infatuated with his daughter's best friend.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between."
+        },
+        "Director": {
+            "Name": "Sam Mendes",
+            "Bio": "Sam Mendes is a British film and stage director, producer, and screenwriter.",
+            "Birthyear": "1965",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0169547/mediaviewer/rm2430294272/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Dark Knight",
+        "Description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+        "Genre": {
+            "Name": "Action",
+            "Description": "This major genre type includes films that have tremendous impact, continuous high energy, lots of physical stunts and activity, possibly extended chase scenes, races, rescues, battles, martial arts, mountains and mountaineering, destructive disasters (floods, explosions, natural disasters, fires, etc.), fights, escapes, non-stop motion, spectacular rhythm and pacing, and adventurous heroes - all designed for pure audience escapism with the action sequences at the core of the filmx."
+        },
+        "Director": {
+            "Name": "Christopher Nolan",
+            "Bio": "Christopher Nolan is a British-American film director, producer, and screenwriter.",
+            "Birthyear": "1970",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0468569/mediaviewer/rm4023877632/",
+        "Featured": ""
+    },
+    {
+        "Title": "The Big Lebowski",
+        "Description": "Ultimate L.A. slacker Jeff 'The Dude' Lebowski, mistaken for a millionaire of the same name, seeks restitution for a rug ruined by debt collectors, enlisting his bowling buddies for help while trying to find the millionaire's missing wife.",
+        "Genre": {
+            "Name": "Comedy",
+            "Description": "Cinematic comedy can be considered the oldest film genre (and one of the most prolific and popular). Comedy was ideal for the early silent films, as it was dependent on visual action and physical humor rather than sound."
+        },
+        "Director": {
+            "Name": [ "Joel Coen", "Ethan Coen" ],
+            "Bio": "Joel Daniel Cohen and Ethan Jesse Coen, collectively known as the Coen brothers, are American filmmakers. Their films span many genres and styles, which they frequently subvert or parody.",
+            "Birthyear": [ "1954", "1957" ],
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0118715/mediaviewer/rm318364928/",
+        "Featured": ""
+    },
+    {
+        "Title": "Star Wars",
+        "Description": "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science Fiction Films are usually scientific, visionary, comic-strip-like, and imaginative, and usually visualized through fanciful, imaginative settings, expert film production design, advanced technology gadgets (i.e., robots and spaceships), scientific developments, or by fantastic special effects. Sci-fi films are complete with heroes, distant planets, impossible quests, improbable settings, fantastic places, great dark and shadowy villains, futuristic technology and gizmos, and unknown and inexplicable forces."
+        },
+        "Director": {
+            "Name": "George Lucas",
+            "Bio": "George Lucas is an American film director, producer, screenwriter, and entrepreneur.",
+            "Birthyear": "1944",
+            "Deathyear": ""
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0076759/mediaviewer/rm3263717120/",
+        "Featured": ""
+    },
+    {
+        "Title": "Blow",
+        "Description": "The story of how George Jung, along with the Medellín Cartel headed by Pablo Escobar, established the American cocaine market in the 1970s in the United States.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime and Gangster films are developed around the sinister actions of criminals or gangsters, particularly bankrobbers, underworld figures, or ruthless hoodlums who operate outside the law, stealing and violently murdering their way through life."
+        },
+        "Director": {
+            "Name": "Ted Demme",
+            "Bio": "Ted Demme was an American director, producer, and actor.",
+            "Birthyear": "1963",
+            "Deathyear": "2002"
+        },
+        "ImageURL": "https://www.imdb.com/title/tt0221027/mediaviewer/rm3904120320/",
+        "Featured": ""
+    }
+];
