@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 (uuid = require('uuid')), (morgan = require('morgan'));
 
 
-mongoose.connect("mongodb://127.0.0.1:27017", {
+mongoose.connect("mongodb://127.0.0.1:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -98,10 +98,9 @@ app.get('/movies',  (req, res) => {
 
 // READ responses based on a json file a particular genre
 app.get('/movies/:Title',  (req, res) => {
-  Movies.findOne({ 'Movie.Title': req.params.Title })
+  Movies.findOne({ Title: req.params.Title })
   .then((movie) => {
-    res.json({ "movieDescription":movie.Description, 
-  "genre":movie.Genre, "director":movie.Director, "imageURL":movie.ImageURL });
+    res.json({ movie });
   })
   .catch((error) => {
     console.error(error);
@@ -279,7 +278,7 @@ app.delete('users/:Username',  (req, res) => {
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:Username/movies:MovieID',  (req, res) => {
+app.post('/users/:Username/movies/:MovieID',  (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username },
     {
       $push: { FavoriteMovies: req.params.MovieID }
@@ -296,7 +295,7 @@ app.post('/users/:Username/movies:MovieID',  (req, res) => {
 });
 
 // deletes a movie from a users list (favorite movies)
-app.delete('/users/:Username/movies:MovieID',  (req, res) => {
+app.delete('/users/:Username/movies/:MovieID',  (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username },
     {
       $pull: { FavoriteMovies: req.params.MovieID }
