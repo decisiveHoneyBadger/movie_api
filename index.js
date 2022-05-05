@@ -46,9 +46,7 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-// integration of CORS
-const cors = require('cors');
-app.use(cors());
+
 
 //static files (serving) 
 app.use(express.static('public'));
@@ -58,29 +56,6 @@ const { check, validationResult } = require('express-validator');
 
 // integrating auth.jhs file for authentication and authorization employing HHTP and JWSToken
 // let auth = require('auth') (app);
-
-
-/* POST login. */
-
-  app.post('/login', (req, res) => {
-      console.log(req);
-      passport.authenticate('local', { session: false }, (error, user, info) => {
-          if (error || !user) {
-              console.log(user);
-              return res.status(400).json({
-                  message: 'Something is not right',
-                  user: user
-              });
-          }
-          req.login(user, { session: false }, (error) => {
-              if (error) {
-                  res.send(error);
-              }
-              let token = generateJWTToken(user.toJSON());
-              return res.json({ user, token });
-          });
-      })(req, res);
-  });
 
 
 // CREATE Movie endpoint
