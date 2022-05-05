@@ -15,6 +15,14 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// imports the auth.js file into the project
+let auth = require('./auth')(app);
+
+
+// requires the Passport module and imports the passport.js file
+const passport = require('passport'); // these t
+require('./passport');
+
 
 
 
@@ -52,6 +60,28 @@ const { check, validationResult } = require('express-validator');
 // let auth = require('auth') (app);
 
 
+/* POST login. */
+
+  app.post('/login', (req, res) => {
+      console.log(req);
+      passport.authenticate('local', { session: false }, (error, user, info) => {
+          if (error || !user) {
+              console.log(user);
+              return res.status(400).json({
+                  message: 'Something is not right',
+                  user: user
+              });
+          }
+          req.login(user, { session: false }, (error) => {
+              if (error) {
+                  res.send(error);
+              }
+              let token = generateJWTToken(user.toJSON());
+              return res.json({ user, token });
+          });
+      })(req, res);
+  });
+
 
 // CREATE Movie endpoint
 app.post('/movies', (req, res) => {
@@ -85,7 +115,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to my movies website')
 });
 
-app.get('/movies',  (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
   Movies.find()
     .then(function (movies) {
       res.status(201).json(movies);
