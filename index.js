@@ -246,13 +246,14 @@ app.put('/users/:Username', (req, res) => {
 });
 
 // Delete a User by Username
-app.delete('users/:Username',  (req, res) => {
+app.delete('/users/:Username',  (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
   .then((user) => {
+    console.log(user);
     if (!user) {
       res.status(400).send(req.params.Username + ' was not found');
     } else {
-      res.status(200).send(req.params.Username * ' was deleted.');  
+      res.status(200).send(req.params.Username + ' was deleted.');  
     } 
   })
   .catch((err) => {
@@ -298,7 +299,7 @@ app.delete('/users/:Username/movies/:MovieID',  (req, res) => {
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('somethoing got broke!');
+  res.status(500).send('something got broke!');
 });
 
 
