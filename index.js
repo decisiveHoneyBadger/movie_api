@@ -7,7 +7,6 @@
 // mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-
 // logging middleware library for Express via Morgan to log all requests
 const express = require('express');
 const app = express();
@@ -23,14 +22,7 @@ let auth = require('./auth')(app);
 const passport = require('passport'); // these t
 require('./passport');
 
-
-
-
-
-
-
 (uuid = require('uuid')), (morgan = require('morgan'));
-
 
 mongoose.connect("mongodb://127.0.0.1:27017/myFlixDB", {
   useNewUrlParser: true,
@@ -38,15 +30,9 @@ mongoose.connect("mongodb://127.0.0.1:27017/myFlixDB", {
 });
 app.use(bodyParser.json());
 
-
-
-
-
 // server requests via log
 app.use(morgan('common'));
 app.use(bodyParser.json());
-
-
 
 //static files (serving) 
 app.use(express.static('public'));
@@ -72,7 +58,7 @@ app.post('/movies', (req, res) => {
             Genre: req.body.Genre.Name,
             Director: req.body.Director.Name,
           })
-          .then((user) => { res.status(2021).json(user) })
+          .then((user) => { res.status(200).json(user) })
           .catch((error) => {
             console.error(error);
             res.status(500).send('Error: ' + error);
@@ -128,13 +114,33 @@ app.get('/movies/genre/:Name',  (req, res) => {
 app.get('/director/:Name',  (req, res) => {
   Movies.findOne({ 'Director.Name': req.params.Name })
   .then((movie) => {
-    res.json({"movieDirector":movie.Description, "movieDirectorBio": movie.Director.Bio, "movieDirectorBirthyaer":movie.Director.Birthyear, "movieDirectorDeathyear":movie.Director.Deathyear});
+    res.json({ "movieDirector":movie.Description, "movieDirectorBio": movie.Director.Bio, "movieDirectorBirthyaer":movie.Director.Birthyear, "movieDirectorDeathyear":movie.Director.Deathyear });
   })
   .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
   });
 });
+
+// READ favorite movies of a given user - OWN CREATION:)
+app.get('/user/:Username/',  (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+  .then((user) => {
+    console.info(user);
+    user.FavoriteMovies.forEach((movieID) => {
+      Movies.findOne({ 'Movie.ID': movieID })
+      .then((movie) => {
+        res.json (movie);
+      })
+    }) 
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
+
+
 
 // READ receives ALL users
 app.get('/users', ( req, res) => {
@@ -197,11 +203,6 @@ app.post('/users', (req, res) => {
 });
 
 
-
-
-
-
-
   // Update a user's info, by username
   /* We’ll expect JSON in this format
   {
@@ -213,28 +214,6 @@ app.post('/users', (req, res) => {
     (required)
     Birthday: Date
   }*/
-  app.put('users/:Username', (req, res) => {
-    Users.findOneAndUpdate({ Username: req.params.Username }, 
-      { $set:
-        {
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-        }
-      },
-      { new: true }, // This line makes sure that the updates document is returned  
-      (err, updateUser) => {
-        if(err) {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-        } else {
-          res.json(updateUser);
-        }  
-      });
-  });
-
-
 // Update a Username
 app.put('/users/:Username', (req, res) => {
 
