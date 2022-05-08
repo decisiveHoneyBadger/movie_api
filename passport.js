@@ -8,6 +8,7 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
+
 passport.use(new LocalStrategy({
   usernameField: 'Username',
   passwordField: 'Password'
@@ -21,7 +22,12 @@ passport.use(new LocalStrategy({
 
     if (!user) {
       console.log('incorrect username');
-      return callback(null, false, { message: 'Incorrect username or password.'}); // If an error occurs, or if the username can’t be found within the database, an error message is passed to the callback
+      return callback(null, false, { message: 'Incorrect username.'}); // If an error occurs, or if the username can’t be found within the database, an error message is passed to the callback
+    }
+
+    if (!user.validatePassword(password)) { // hashes any password entered by the user when loogging in before comparing to the password stored in MongoDB
+      console.log('incorrect username');
+      return callback(null, false, { message: 'Incorrect password.'});
     }
 
     console.log('finished');
