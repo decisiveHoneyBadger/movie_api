@@ -14,6 +14,26 @@ passport.use(new LocalStrategy({
   passwordField: 'Password'
 }, (username, password, callback) => {
   console.log(username + '  ' + password);
+  // Users.findOne({ Username: username }, (error, user) => {
+  // Users.findOne({ Username: username }, (error, users) => {
+  //   if (error) {
+  //     console.log(error);
+  //     return callback(error);
+  //   }
+
+  //   if (!users) {
+  //     console.log('incorrect username');
+  //     return callback(null, false, { message: 'Incorrect username.'}); // If an error occurs, or if the username can’t be found within the database, an error message is passed to the callback
+  //   } 
+
+  //   if (users) {
+  //     console.log('user found');
+  //     console.log(JSON.stringify(users));
+  //   }
+  //   console.log('finished');
+  //   return callback(null, users);
+  // });
+
   Users.findOne({ Username: username }, (error, user) => {
     if (error) {
       console.log(error);
@@ -26,7 +46,7 @@ passport.use(new LocalStrategy({
     }
 
     if (!user.validatePassword(password)) { // hashes any password entered by the user when loogging in before comparing to the password stored in MongoDB
-      console.log('incorrect username');
+      console.log('validtion failed');
       return callback(null, false, { message: 'Incorrect password.'});
     }
 
