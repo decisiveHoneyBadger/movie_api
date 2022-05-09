@@ -25,7 +25,8 @@ require('./passport');
 (uuid = require('uuid')), (morgan = require('morgan'));
 
 // hides connection settings in environment variable of heroku
-mongoose.connect(process.env.CONNECTION_URI, 
+// mongoose.connect(process.env.CONNECTION_URI, 
+mongoose.connect('mongodb://localhost:27017/myFlixDB',
 { 
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -14,26 +14,7 @@ passport.use(new LocalStrategy({
   passwordField: 'Password'
 }, (username, password, callback) => {
   console.log(username + '  ' + password);
-  // Users.findOne({ Username: username }, (error, user) => {
-  // Users.findOne({ Username: username }, (error, users) => {
-  //   if (error) {
-  //     console.log(error);
-  //     return callback(error);
-  //   }
-
-  //   if (!users) {
-  //     console.log('incorrect username');
-  //     return callback(null, false, { message: 'Incorrect username.'}); // If an error occurs, or if the username can’t be found within the database, an error message is passed to the callback
-  //   } 
-
-  //   if (users) {
-  //     console.log('user found');
-  //     console.log(JSON.stringify(users));
-  //   }
-  //   console.log('finished');
-  //   return callback(null, users);
-  // });
-
+  
   Users.findOne({ Username: username }, (error, user) => {
     if (error) {
       console.log(error);
@@ -57,7 +38,7 @@ passport.use(new LocalStrategy({
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), // this "secret" key is to verify the signature of the JWT. This signature verifies that the sender of the JWT (the client) is who it says it is
-  secretOrKey: 'your_jwt_secret' 
+  secretOrKey: process.env.JWT_SECRET  
 }, (jwtPayload, callback) => {
   return Users.findById(jwtPayload._id)
     .then((user) => {
