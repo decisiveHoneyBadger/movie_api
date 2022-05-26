@@ -82,16 +82,20 @@ app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.send('Welcome to my movies website');
 });
 
-app.get('/movies', function (req, res) {
-  Movies.find()
-    .then(function (movies) {
-      res.status(201).json(movies);
-    })
-    .catch(function (error) {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+app.get(
+  '/movies',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then(function (movies) {
+        res.status(201).json(movies);
+      })
+      .catch(function (error) {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+  },
+);
 
 // READ responses based on a json file a particular genre
 app.get(
