@@ -236,7 +236,7 @@ app.post(
     }
 
     let hashedPassword = Users.hashPassword(req.body.Password); // hashes any password entered by the user when registering before stroring it in the MongoDB
-    Users.findOne({ Username: req.body.Username }) // search to see if a user with the requested username already exists
+    Users.findOne({ Username: req.body.Username }) // searches to see if a user with the requested username already exists
       .then((user) => {
         if (user) {
           // if the user is found, send a response that it already exists
@@ -281,6 +281,7 @@ app.put(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     let errors = validationResult(req);
+    let hashedPassword = Users.hashPassword(req.body.Password); // hashes any password entered by the user when registering before stroring it in the MongoDB
 
     if (!errors.isEmpty()) {
       return res.status(442).json({ errors: errors.array() });
@@ -291,7 +292,7 @@ app.put(
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
