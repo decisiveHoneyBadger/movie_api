@@ -151,7 +151,7 @@ app.get(
 
 // READ favorite movies of a given user - OWN CREATION:)
 app.get(
-  '/user/:Username/',
+  '/user/:Username/movies',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
@@ -380,7 +380,7 @@ app.delete(
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('something got broke!');
+  res.status(500).send(err.stack);
 });
 
 const port = process.env.PORT || 8080;
