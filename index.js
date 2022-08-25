@@ -380,7 +380,7 @@ app.delete(
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send(err.stack);
+  res.status(500).send('something got broke!');
 });
 
 const port = process.env.PORT || 8080;
