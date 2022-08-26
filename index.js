@@ -179,25 +179,25 @@ app.get(
 );
 
 // READ favorite movies of a given user - OWN CREATION:)
-app.get(
-  '/user/:Username/movies',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-      .then((user) => {
-        console.info(user);
-        user.FavoriteMovies.forEach((movieID) => {
-          Movies.findOne({ 'Movie.ID': movieID }).then((movie) => {
-            res.json(movie);
-          });
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      });
-  },
-);
+// app.get(
+//   '/user/:Username/movies',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     Users.findOne({ Username: req.params.Username })
+//       .then((user) => {
+//         console.info(user);
+//         user.FavoriteMovies.forEach((movieID) => {
+//           Movies.findOne({ 'Movie.ID': movieID }).then((movie) => {
+//             res.json(movie);
+//           });
+//         });
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//         res.status(500).send('Error: ' + err);
+//       });
+//   },
+// );
 
 // READ receives ALL users
 app.get(
