@@ -76,7 +76,10 @@ const { check, validationResult } = require('express-validator');
 // integrating auth.jhs file for authentication and authorization employing HHTP and JWSToken
 // let auth = require('auth') (app);
 
-// CREATE Movie endpoint
+/**
+ * CREATES movie endpoint
+ */
+
 app.post(
   '/movies',
   passport.authenticate('jwt', { session: false }),
@@ -108,11 +111,22 @@ app.post(
   },
 );
 
-// read welcome page
+/**
+ * endpoint to READ the homepage
+ * @method get
+ * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {boolean} - JSON object
+ */
 app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.send('Welcome to my movies website');
 });
 
+/**
+ * endpoint to READ the entire list of movies from the database
+ * @method get
+ * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of all movies' data
+ */
 app.get(
   '/movies',
   passport.authenticate('jwt', { session: false }),
@@ -128,7 +142,12 @@ app.get(
   },
 );
 
-// READ responses based on a json file a particular genre
+/**
+ * endpoint to READ a single movie by title
+ * @method get
+ * @param {req.headers} object - headers {"authorization :"bearer <jwt>"}
+ * @returns {object} - JSON of a single movie's data
+ */
 app.get(
   '/movies/:Title',
   passport.authenticate('jwt', { session: false }),
@@ -144,6 +163,13 @@ app.get(
   },
 );
 
+/**
+ * endpoint to READ the complete list of a particular genres
+ * @method get
+ * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of a specific genre
+ *
+ */
 app.get(
   '/movies/genre/:Name',
   passport.authenticate('jwt', { session: false }),
@@ -159,7 +185,12 @@ app.get(
   },
 );
 
-// READ obtains information about a director
+/**
+ * endpoint to READ a single director by name
+ * @method get
+ * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of a single director
+ */
 app.get(
   '/director/:Name',
   passport.authenticate('jwt', { session: false }),
@@ -180,11 +211,13 @@ app.get(
   },
 );
 
-/* GET: Returns a list of favorite movies from the user
- * Request body: Bearer token
- * @param Username
- * @returns array of favorite movies
- * @requires passport
+/**
+ * endpoint to READ a user's list of favorite movies
+ * @method get
+ * @param "Username"
+ * @request "Bearer token"
+ * @requires {passport}
+ * @returns {boolean} - "array of favorite movies"
  */
 app.get(
   '/users/:Username/movies',
@@ -206,28 +239,69 @@ app.get(
   },
 );
 
-// READ favorite movies of a given user - OWN CREATION:)
-// app.get(
-//   '/user/:Username/movies',
-//   passport.authenticate('jwt', { session: false }),
-//   (req, res) => {
-//     Users.findOne({ Username: req.params.Username })
-//       .then((user) => {
-//         console.info(user);
-//         user.FavoriteMovies.forEach((movieID) => {
-//           Movies.findOne({ 'Movie.ID': movieID }).then((movie) => {
-//             res.json(movie);
-//           });
-//         });
-//       })
-//       .catch((err) => {
-//         console.error(err);
-//         res.status(500).send('Error: ' + err);
-//       });
-//   },
-// );
+/**
+ * endpoint to CREATE a single movie by adding it to the user's favorite movies'
+ * @method post
+ * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of updated user details
+ */
 
-// READ receives ALL users
+app.post(
+  '/users/:Username/movies/:MovieID',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $push: { FavoriteMovies: req.params.MovieID },
+      },
+      { new: true }, // This document is returned
+      (err, updateUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        } else {
+          res.json(updateUser);
+        }
+      },
+    );
+  },
+);
+
+/**
+ * endpoint to DELETE a single movie from the favorite movies's list
+ * @method delete
+ * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of updated user details
+ */
+app.delete(
+  '/users/:Username/movies/:MovieID',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $pull: { FavoriteMovies: req.params.MovieID },
+      },
+      { new: true },
+      (err, updateUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        } else {
+          res.json(updateUser);
+        }
+      },
+    );
+  },
+);
+
+/**
+ * endpoint to READ all registered users
+ * @method get
+ * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of all users
+ */
 app.get(
   '/users',
   passport.authenticate('jwt', { session: false }),
@@ -243,7 +317,12 @@ app.get(
   },
 );
 
-// Get a user by Username
+/**
+ * endpoint to READ a single registered user
+ * @method get
+ * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {object} - JSON object of a single user
+ */
 app.get(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -259,23 +338,23 @@ app.get(
   },
 );
 
-// CREATE User
-//Add a user
-/* We’ll expect JSON in this format
-{
- ID: Integer,
- Username: String,
- Password: String,
- Email: String,
- Birthday: Date
-}*/
+/**
+ * endpoint to CREATE a user
+ * @method get
+ * @param {req.body} - JSON object format required:
+ * @ID {integer}
+ * @Username {string}
+ * @Email {string}
+ * @Bithday date
+ */
 app.post(
   '/users',
-  // Validation logic here for request
-  // You can either use a chain of methods like .not().isEmpty()
-  // which means "opposite of isEmpty" in plain english "is not empty"
-  // or use .isLength({ min: 5 }) which means
-  // minimum value of 5 characters are only allowed
+  /* Validation logic here for request
+  You can either use a chain of methods like .not().isEmpty()
+  which means "opposite of isEmpty" in plain english "is not empty"
+  or use .isLength({ min: 5 }) which means
+  minimum value of 5 characters are only allowed
+  */
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
     check(
@@ -321,18 +400,15 @@ app.post(
   },
 );
 
-// Update a user's info, by username
-/* We’ll expect JSON in this format
- {
-   Username: String,
-   (required)
-   Password: String,
-   (required)
-   Email: String,
-   (required)
-   Birthday: Date
- }*/
-// Update a Username
+/**
+ * endpoint to UPDATE a single user's data
+ * @method put
+ * @param {req.body} - JSON object format required:
+ * @Username {string} - required
+ * @Password {string} - required
+ * @Email {string}  - required
+ * @Birthday date
+ */
 app.put(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -367,7 +443,12 @@ app.put(
   },
 );
 
-// Delete a User by Username
+/**
+ * endpoint to DELETE a user by username
+ * @method delete
+ * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @returns {string} - confirmation message
+ */
 app.delete(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -385,52 +466,6 @@ app.delete(
         console.error(err);
         res.status(500).send('Error: ' + err);
       });
-  },
-);
-
-// Add a movie to a user's list of favorites
-app.post(
-  '/users/:Username/movies/:MovieID',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $push: { FavoriteMovies: req.params.MovieID },
-      },
-      { new: true }, // This document is returned
-      (err, updateUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-        } else {
-          res.json(updateUser);
-        }
-      },
-    );
-  },
-);
-
-// deletes a movie from a users list (favorite movies)
-app.delete(
-  '/users/:Username/movies/:MovieID',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $pull: { FavoriteMovies: req.params.MovieID },
-      },
-      { new: true },
-      (err, updateUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-        } else {
-          res.json(updateUser);
-        }
-      },
-    );
   },
 );
 

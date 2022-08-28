@@ -1,4 +1,8 @@
-// Here, two passport strategies are defined. (1) LocalStrategy takes a username and password from the request body and uses Mongoose to check your database for a user with the same username
+/*
+Here, two passport strategies are defined. 
+LocalStrategy takes a username and password from the request body 
+and uses Mongoose to check your database for a user with the same username
+*/
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   Models = require('./models.js'),
