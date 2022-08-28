@@ -21,6 +21,7 @@ let allowedOrigins = [
   'https://desolate-basin-26751.herokuapp.com',
   'http://localhost:1234',
   'https://decisivehoneybadger.github.io',
+  'https://decisivehoneybadger.github.io/myFlix-Angular-client',
 ];
 
 app.use(
