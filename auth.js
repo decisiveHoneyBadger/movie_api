@@ -21,10 +21,10 @@ let generateJWTToken = (user) => {
 
 /**
  * CREATE(S) login credentials creating JWT web token
- * @method post
+ * @method POST
+ * @function [path]/login
  * @params {*} router
- * @returns {boolean, number} - user, token
- *
+ * @returns {object} user
  */
 module.exports = (router) => {
   router.post('/login', (req, res) => {

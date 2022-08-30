@@ -40,12 +40,6 @@ app.use(
   }),
 );
 
-// app.use(
-//   cors({
-//     origin: '*',
-//   }),
-// );
-
 // imports the auth.js file into the project
 let auth = require('./auth')(app);
 
@@ -78,6 +72,11 @@ const { check, validationResult } = require('express-validator');
 
 /**
  * CREATES movie endpoint
+ * @method POST
+ * @function [path]/movies
+ * @params {string } Title, Description, Genre, Director
+ * @requires passport
+ * @returns {} 200 succesfull status
  */
 
 app.post(
@@ -113,8 +112,10 @@ app.post(
 
 /**
  * endpoint to READ the homepage
- * @method get
+ * @method GET
+ * @function [path]/
  * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {boolean} - JSON object
  */
 app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -123,9 +124,12 @@ app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 
 /**
  * endpoint to READ the entire list of movies from the database
- * @method get
+ * @method GET
+ * @function [path]/movies
  * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of all movies' data
+ *
  */
 app.get(
   '/movies',
@@ -144,9 +148,12 @@ app.get(
 
 /**
  * endpoint to READ a single movie by title
- * @method get
+ * @method GET
+ * @function [path]/movies/:Title
  * @param {req.headers} object - headers {"authorization :"bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON of a single movie's data
+ *
  */
 app.get(
   '/movies/:Title',
@@ -165,8 +172,10 @@ app.get(
 
 /**
  * endpoint to READ the complete list of a particular genres
- * @method get
+ * @method GET
+ * @function [path]/movies/genre/:Name
  * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of a specific genre
  *
  */
@@ -187,8 +196,10 @@ app.get(
 
 /**
  * endpoint to READ a single director by name
- * @method get
+ * @method GET
+ * @function [path]/director/:Name
  * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of a single director
  */
 app.get(
@@ -213,11 +224,12 @@ app.get(
 
 /**
  * endpoint to READ a user's list of favorite movies
- * @method get
- * @param "Username"
- * @request "Bearer token"
- * @requires {passport}
- * @returns {boolean} - "array of favorite movies"
+ * @method GET
+ * @function [path]/users/:Username/movies
+ * @param {any} Username
+ * @request Bearer token
+ * @requires passport
+ * @returns [] array of favorite movies
  */
 app.get(
   '/users/:Username/movies',
@@ -241,8 +253,10 @@ app.get(
 
 /**
  * endpoint to CREATE a single movie by adding it to the user's favorite movies'
- * @method post
+ * @method POST
+ * @function [path]/users/:Username/movies/:MovieID
  * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of updated user details
  */
 
@@ -270,8 +284,10 @@ app.post(
 
 /**
  * endpoint to DELETE a single movie from the favorite movies's list
- * @method delete
+ * @method DELETE
+ * @function [path]/users/:Username/movies/:MovieID
  * @params {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of updated user details
  */
 app.delete(
@@ -298,8 +314,10 @@ app.delete(
 
 /**
  * endpoint to READ all registered users
- * @method get
+ * @method GET
+ * @function [path]/users
  * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of all users
  */
 app.get(
@@ -319,8 +337,10 @@ app.get(
 
 /**
  * endpoint to READ a single registered user
- * @method get
+ * @method GET
+ * @function [path]/users/:Username
  * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
+ * @requires passport
  * @returns {object} - JSON object of a single user
  */
 app.get(
@@ -340,12 +360,11 @@ app.get(
 
 /**
  * endpoint to CREATE a user
- * @method get
- * @param {req.body} - JSON object format required:
- * @ID {integer}
- * @Username {string}
- * @Email {string}
- * @Bithday date
+ * @method GET
+ * @function [path]/users
+ * @param {JSON} - data from registration form
+ * @returns {object} user
+ *
  */
 app.post(
   '/users',
@@ -402,12 +421,11 @@ app.post(
 
 /**
  * endpoint to UPDATE a single user's data
- * @method put
- * @param {req.body} - JSON object format required:
- * @Username {string} - required
- * @Password {string} - required
- * @Email {string}  - required
- * @Birthday date
+ * @method PUT
+ * @function [path]/users/:Username
+ * @param {any} Username
+ * @requires passport
+ * @returns {any} updated user data
  */
 app.put(
   '/users/:Username',
@@ -445,9 +463,11 @@ app.put(
 
 /**
  * endpoint to DELETE a user by username
- * @method delete
- * @param {req.headers} object - headers {"authorization" : "bearer <jwt>"}
- * @returns {string} - confirmation message
+ * @method DELETE
+ * @function [path]/users/:Username
+ * @param {any} Username
+ * @requires passport
+ * @returns {string} confirmation message
  */
 app.delete(
   '/users/:Username',
