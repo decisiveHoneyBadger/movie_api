@@ -22,6 +22,7 @@ let allowedOrigins = [
   'http://localhost:1234',
   'https://decisivehoneybadger.github.io',
   'https://decisivehoneybadger.github.io/myFlix-Angular-client',
+  'https://myflix-cinema.netlify.app',
 ];
 
 app.use(
